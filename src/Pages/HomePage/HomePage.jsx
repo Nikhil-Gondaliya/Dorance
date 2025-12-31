@@ -106,6 +106,18 @@ export function HomePage() {
       borderBottom: '2px solid transparent',
       transition: 'all 0.3s ease'
     },
+    navLinks: {
+      color: 'white',
+      textDecoration: 'none',
+      fontSize: '1rem',
+      cursor: 'pointer',
+      background: 'none',
+      border: 'none',
+      fontFamily: 'inherit',
+      padding: '0.5rem 0',
+      borderBottom: '2px solid transparent',
+      transition: 'all 0.3s ease'
+    },
     navLinkActive: {
       borderBottom: '2px solid #1e293b'
     },
@@ -512,6 +524,14 @@ export function HomePage() {
             <p style={styles.projectsText}>
               Discover our comprehensive collection of doors and windows. From classic designs to contemporary styles, we offer solutions for every architectural need. Download our catalogue to explore detailed specifications, dimensions, and finishes.
             </p>
+            <button
+              onClick={() => navigate("/products")}
+              style={styles.navLinks}
+              onMouseEnter={(e) => e.target.style.borderBottom = '2px solid white'}
+              onMouseLeave={(e) => e.target.style.borderBottom = '2px solid transparent'}
+            >
+              View Products
+            </button>
           </div>
         </div>
         <div style={styles.projectsRight}>
