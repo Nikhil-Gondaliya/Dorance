@@ -1,129 +1,159 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { productsData } from '../../data';
+import { Header } from '../../Components/Header';
+import { Footer } from '../../Components/Footer';
 
 export const ProductsPage = () => {
-  const filteredProducts = productsData;
-
   const styles = {
     container: {
       minHeight: '100vh',
-      backgroundColor: '#ffffff',
+      backgroundColor: '#f8fafc',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     },
     header: {
-      backgroundColor: '#2c3e5f',
+      background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)',
       color: '#ffffff',
-      padding: '2rem 2rem 4rem',
-      textAlign: 'center'
+      padding: '5rem 2rem 6rem',
+      textAlign: 'center',
+      position: 'relative',
+      overflow: 'hidden'
     },
     headerTitle: {
-      fontSize: '3.5rem',
-      fontWeight: '300',
-      margin: '0 0 1rem 0'
+      fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+      fontWeight: '600',
+      margin: '0 0 1rem 0',
+      letterSpacing: '-0.02em'
     },
     headerSubtitle: {
       fontSize: '1.25rem',
-      color: '#cbd5e1',
-      maxWidth: '700px',
-      margin: '0 auto'
-    },
-    productsGrid: {
-      maxWidth: '1400px',
+      maxWidth: '720px',
       margin: '0 auto',
-      padding: '4rem 2rem',
+      opacity: 0.9,
+      lineHeight: 1.6
+    },
+    grid: {
+      maxWidth: '1400px',
+      margin: '-4rem auto 4rem',
+      padding: '0 1.5rem',
       display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: '2.5rem'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+      gap: '2rem'
     },
     card: {
       backgroundColor: '#ffffff',
-      borderRadius: '12px',
+      borderRadius: '16px',
       overflow: 'hidden',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+      transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
       textDecoration: 'none',
-      color: 'inherit'
+      color: 'inherit',
+      position: 'relative'
     },
-    cardImage: {
+    cardHover: {
+      transform: 'translateY(-12px)',
+      boxShadow: '0 20px 40px rgba(0,0,0,0.15)'
+    },
+    image: {
       width: '100%',
-      height: '250px',
+      height: '260px',
       objectFit: 'cover',
       backgroundColor: '#e2e8f0'
     },
-    cardContent: {
-      padding: '1.5rem'
+    content: {
+      padding: '1.75rem'
     },
-    cardCategory: {
-      color: '#FF6B47',
-      fontSize: '0.875rem',
-      fontWeight: '600',
+    category: {
+      color: '#e85d04',
+      fontSize: '0.9rem',
+      fontWeight: '700',
       textTransform: 'uppercase',
-      letterSpacing: '0.05em',
+      letterSpacing: '0.08em',
       marginBottom: '0.75rem'
     },
-    cardTitle: {
-      fontSize: '1.5rem',
-      fontWeight: '600',
-      color: '#2c3e5f',
+    title: {
+      fontSize: '1.6rem',
+      fontWeight: '700',
+      color: '#0f172a',
       margin: '0 0 1rem 0'
     },
-    cardDescription: {
+    description: {
       fontSize: '1rem',
       color: '#64748b',
-      lineHeight: '1.6',
+      lineHeight: 1.6,
       margin: 0
-    },
-    backLink: {
-      display: 'inline-block',
-      padding: '1rem 1rem',
-      margin: '1rem',
-      backgroundColor: '#2c3e5f',
-      color: '#ffffff',
-      textDecoration: 'none',
-      borderRadius: '50px',
-      fontWeight: '600',
-      transition: 'all 0.3s ease'
     }
   };
 
   return (
     <div style={styles.container}>
-      <Link to="/" style={styles.backLink}>← Back to Home</Link>
+      <Header />
 
       <header style={styles.header}>
         <h1 style={styles.headerTitle}>Our Products</h1>
         <p style={styles.headerSubtitle}>
-          Explore my portfolio of successful marketing campaigns and brand transformations
+          Premium stainless steel fabrication and hardware solutions for architecture,
+          commercial kitchens, industry and water pumping applications
         </p>
       </header>
 
-      <section style={styles.productsGrid}>
-        {filteredProducts.map(product => (
+      <section style={styles.grid}>
+        {productsData.map((product) => (
           <Link
             key={product.id}
             to={`/products/${product.id}`}
             style={styles.card}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.1)';
-            }}
+            onMouseEnter={(e) => Object.assign(e.currentTarget.style, styles.cardHover)}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
             }}
           >
-            <img src={product.image} alt={product.title} style={styles.cardImage} />
-            <div style={styles.cardContent}>
-              <div style={styles.cardCategory}>{product.category}</div>
-              <h3 style={styles.cardTitle}>{product.title}</h3>
-              <p style={styles.cardDescription}>{product.description}</p>
+            <img
+              src={product.image}
+              alt={product.title}
+              style={styles.image}
+              loading="lazy"
+            />
+            <div style={styles.content}>
+              <div style={styles.category}>{product.category}</div>
+              <h3 style={styles.title}>{product.title}</h3>
+              <p style={styles.description}>{product.description}</p>
             </div>
           </Link>
         ))}
       </section>
+
+      {/* Optional CTA strip */}
+      <div style={{
+        textAlign: 'center',
+        padding: '4rem 1rem',
+        backgroundColor: '#f1f5f9'
+      }}>
+        <h2 style={{ fontSize: '2.2rem', color: '#0f172a', marginBottom: '1.5rem' }}>
+          Need More Information?
+        </h2>
+        <p style={{ fontSize: '1.2rem', color: '#475569', maxWidth: '600px', margin: '0 auto 2rem' }}>
+          Bring your vision to life with bespoke work. We're ready when you are!
+        </p>
+        <a
+          href="tel:+918217524980"
+          style={{
+            display: 'inline-block',
+            padding: '1rem 2.2rem',
+            backgroundColor: '#e85d04',
+            color: 'white',
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            borderRadius: '50px',
+            textDecoration: 'none'
+          }}
+        >
+          Call: +91 82175 24980
+        </a>
+      </div>
+
+      <Footer />
     </div>
   );
 };

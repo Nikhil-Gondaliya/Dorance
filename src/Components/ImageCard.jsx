@@ -17,7 +17,7 @@ export const ImageCard = ({ styles, imgUrl, onClick, buttonLabel }) => {
       {/* Image */}
       <img
         src={imgUrl}
-        alt="SME OCEANWAYS Product"
+        alt="SMEOCEANWAYS Product"
         style={{
           width: "100%",
           maxWidth: "238px",

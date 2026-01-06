@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  FaPhoneAlt,
-  FaEnvelope,
-  FaInstagram,
-  FaLinkedinIn,
-  FaFacebookF,
-} from "react-icons/fa";
+import { Footer } from "../../Components/Footer";
+import { Header } from "../../Components/Header";
 
 export function ContactPage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -16,8 +10,6 @@ export function ContactPage() {
     email: "",
     message: "",
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -104,17 +96,17 @@ export function ContactPage() {
       fontWeight: 500,
     },
     input: {
-      width: "100%",
+      width: "95%",
       padding: "1rem",
-      background: "#f8f9fa",
-      border: "none",
+      background: "#e0e0e0ff",
+      border: "1px solid",
       borderRadius: "6px",
     },
     textArea: {
-      width: "100%",
+      width: "95%",
       padding: "1rem",
-      background: "#f8f9fa",
-      border: "none",
+      background: "#e0e0e0ff",
+      border: "1px solid",
       borderRadius: "6px",
       minHeight: "150px",
     },
@@ -175,37 +167,7 @@ export function ContactPage() {
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
-      {/* NAV */}
-      <nav style={styles.nav}>
-        <div style={styles.navContainer}>
-          <img
-            src="/image/logo.png"
-            alt="Logo"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          />
-          <ul style={styles.navMenu}>
-            <li>
-              <button style={styles.navLink} onClick={() => navigate("/")}>
-                Home
-              </button>
-            </li>
-            <li>
-              <button style={styles.navLink} onClick={() => navigate("/products")}>
-                Products
-              </button>
-            </li>
-            <li>
-              <button
-                style={{ ...styles.navLink, ...styles.navLinkActive }}
-                onClick={() => navigate("/contact")}
-              >
-                Contact
-              </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <Header />
 
       {/* MAIN */}
       <main style={styles.mainContainer}>
@@ -256,8 +218,8 @@ export function ContactPage() {
           {/* RIGHT - GOOGLE MAP WITH PIN */}
           <div style={styles.mapWrapper}>
             <iframe
-              title="SME Oceanways Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.918206693576!2d72.8311!3d21.1702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1sSME%20Oceanways!2sSME%20Oceanways!5e0!3m2!1sen!2sin!4v1700000000000"
+              title="SMEOceanways Location"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3694.0220897128343!2d70.8033725!3d22.2012668!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395835e7bcdc70a3%3A0x42436db1e1611995!2sSME%20ENTERPRISES!5e0!3m2!1sen!2sin!4v1767713468162!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -269,27 +231,7 @@ export function ContactPage() {
       </main>
 
       {/* FOOTER */}
-      <footer style={styles.footer}>
-        <div style={styles.footerContainer}>
-          <div>
-            <h4 style={styles.footerTitle}>SME OCEANWAYS</h4>
-            <p style={styles.footerText}>
-              Leading manufacturer and supplier of premium doors and windows.
-            </p>
-          </div>
-
-          <div style={styles.footerRight}>
-            <h4 style={styles.footerTitle}>Contact Details</h4>
-            <div style={styles.iconRow}>
-              <a href="tel:+918217524980" style={styles.iconLink}><FaPhoneAlt /></a>
-              <a href="mailto:smeoceanways@gmail.com" style={styles.iconLink}><FaEnvelope /></a>
-              <a href="https://www.instagram.com/smeoceanways" target="_blank" rel="noreferrer" style={styles.iconLink}><FaInstagram /></a>
-              <a href="https://www.linkedin.com/company/smeoceanways" target="_blank" rel="noreferrer" style={styles.iconLink}><FaLinkedinIn /></a>
-              <a href="https://www.facebook.com/smeoceanways" target="_blank" rel="noreferrer" style={styles.iconLink}><FaFacebookF /></a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer isMobile={isMobile} />
     </div>
   );
 }

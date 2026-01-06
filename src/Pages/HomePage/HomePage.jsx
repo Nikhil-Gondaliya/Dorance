@@ -3,23 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { Header } from '../../Components/Header';
 import { useNavigate } from 'react-router-dom';
 import { ImageCard } from '../../Components/ImageCard';
-import {
-  FaPhoneAlt,
-  FaEnvelope,
-  FaInstagram,
-  FaLinkedinIn,
-  FaFacebookF,
-} from "react-icons/fa";
+import { Footer } from '../../Components/Footer';
 
 const mainImges = [
-  "/image/mainStove.png",
   "/image/doorClose.jpg",
-  "/image/mainPump.png",
   "/image/liner.png",
+  "/image/gs.png",
+  "/image/mainPump.png",
 ]
 
 export function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -131,13 +125,16 @@ export function HomePage() {
     },
     heroLeft: {
       backgroundColor: '#2c3e5f',
-      padding: isMobile ? '3rem 1.5rem' : '6rem 4rem',
+      padding: isMobile ? '3rem 1.5rem' : '5rem 4rem',
       display: 'flex',
       alignItems: 'center'
     },
     heroContent: {
       maxWidth: '600px',
-      marginLeft: isMobile ? '0' : '4rem'
+      marginLeft: isMobile ? '0' : '1.2rem',
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px"
     },
     heroTitle: {
       fontSize: isMobile ? '2.5rem' : '4.5rem',
@@ -148,14 +145,16 @@ export function HomePage() {
       letterSpacing: '-0.02em'
     },
     heroSubtitle: {
-      fontSize: isMobile ? '1rem' : '1.125rem',
+      fontSize: isMobile ? '1rem' : '1.5rem',
       color: '#ffffff',
       margin: 0,
       lineHeight: '1.6',
-      opacity: '0.95'
+      fontWeight: '300',
+      opacity: '0.95',
+      textAlign: "center"
     },
     heroRight: {
-      backgroundColor: '#F4D03F',
+      backgroundColor: '#ffffffff',
       position: 'relative',
       overflow: 'hidden',
       minHeight: isMobile ? '300px' : 'auto'
@@ -330,7 +329,7 @@ export function HomePage() {
     // Work Approach Section Styles
     approachSection: {
       padding: isMobile ? '4rem 1.5rem' : '8rem 4rem',
-      backgroundColor: '#F4D03F',
+      backgroundColor: '#c9d5ff',
       textAlign: 'center'
     },
     approachTitle: {
@@ -422,19 +421,18 @@ export function HomePage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: "sans-serif" }}>
       {/* Navigation */}
-      <Header isMobile={isMobile} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+      <Header />
 
       {/* Hero Section */}
       <section id="home" style={styles.heroSection}>
         <div style={styles.heroLeft}>
           <div style={styles.heroContent}>
-            <h2 style={styles.heroTitle}>
-              Premium Doors & Windows<br />for Modern Living
-            </h2>
+            <img src='/image/smeLogo.jpg' alt="SME" width="500px" />
+
             <p style={styles.heroSubtitle}>
-              Where Quality Meets Global Trade to enhance your space with style, security, and durability.
+              Where Quality Meets Global Trade.
             </p>
           </div>
         </div>
@@ -454,7 +452,7 @@ export function HomePage() {
               <img
                 key={index}
                 src={img}
-                alt="SME OCEANWAYS Product"
+                alt="SMEOCEANWAYS Product"
                 style={{
                   width: `${100 / mainImges.length}%`,
                   maxWidth: "675px",
@@ -471,7 +469,7 @@ export function HomePage() {
 
       {/* Background Section */}
       <section style={styles.backgroundSection}>
-        <p style={styles.sectionLabel}>ABOUT SME OCEANWAYS</p>
+        <p style={styles.sectionLabel}>ABOUT SMEOCEANWAYS</p>
         <p style={styles.backgroundText}>
           SME OCEAN WAYS is a reliable manufacturer and supplier of premium door closer, kitchen equipment, submersible pumps, and hardware products. We focus on delivering durable, high-performance solutions designed for commercial and industrial use. With quality craftsmanship and customer-first service, we provide products that ensure efficiency, safety, and long-term value for every project.
         </p>
@@ -536,10 +534,10 @@ export function HomePage() {
         </div>
         <div style={styles.projectsRight}>
           <div style={styles.projectsGrid}>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#5B9BD5', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/dooforpfd.jpg" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} />
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#F4D03F', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/mainStove.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} />
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#FF8C42', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} />
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#70C7BA', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/dooforpfd.jpg" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/gs.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} />
           </div>
         </div>
       </section>
@@ -552,7 +550,7 @@ export function HomePage() {
           </div>
           <div>
             <p style={styles.testimonialQuote}>
-              "SME OCEANWAYS has been our trusted partner for over five years. Their commitment to quality and attention to detail is exceptional. The doors and windows we've installed have exceeded our expectations in both durability and design. Their team is professional, responsive, and truly understands the needs of modern construction projects."
+              "SMEOCEANWAYS has been our trusted partner for over five years. Their commitment to quality and attention to detail is exceptional. The doors and windows we've installed have exceeded our expectations in both durability and design. Their team is professional, responsive, and truly understands the needs of modern construction projects."
             </p>
             <p style={styles.testimonialAuthor}>Rajesh Patel</p>
             <p style={styles.testimonialRole}>Project Manager</p>
@@ -563,7 +561,7 @@ export function HomePage() {
 
       {/* Work Approach Section */}
       <section style={styles.approachSection}>
-        <p style={{ ...styles.sectionLabel, color: '#2c3e5f' }}>WHY CHOOSE SME OCEANWAYS</p>
+        <p style={{ ...styles.sectionLabel, color: '#2c3e5f' }}>WHY CHOOSE SMEOCEANWAYS</p>
         <h3 style={styles.approachTitle}>
           Quality craftsmanship meets innovative design. We don't just sell products, we deliver lasting solutions.
         </h3>
@@ -578,30 +576,7 @@ export function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" style={styles.footer}>
-        <div style={styles.footerContainer}>
-          {/* Left */}
-          <div>
-            <h4 style={styles.footerTitle}>SME OCEANWAYS</h4>
-            <p style={styles.footerText}>
-              Leading manufacturer and supplier of premium doors and windows. Quality,
-              durability, and style for residential and commercial projects.
-            </p>
-          </div>
-
-          {/* Right */}
-          <div style={styles.footerRight}>
-            <h4 style={styles.footerTitle}>Contact Details</h4>
-            <div style={styles.iconRow}>
-              <a href="tel:+918217524980" style={styles.iconLink}><FaPhoneAlt /></a>
-              <a href="mailto:smeoceanways@gmail.com" style={styles.iconLink}><FaEnvelope /></a>
-              <a href="https://www.instagram.com/smeoceanways" target="_blank" rel="noreferrer" style={styles.iconLink}><FaInstagram /></a>
-              <a href="https://www.linkedin.com/company/smeoceanways" target="_blank" rel="noreferrer" style={styles.iconLink}><FaLinkedinIn /></a>
-              <a href="https://www.facebook.com/smeoceanways" target="_blank" rel="noreferrer" style={styles.iconLink}><FaFacebookF /></a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer isMobile={isMobile} />
     </div>
   );
 }
