@@ -2,10 +2,6 @@
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaInstagram, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
 
-// If you're using local files (recommended):
-// import nsLogo from '@/assets/ns-logo.png';
-// import smeOceanwaysLogo from '@/assets/sme-oceanways-logo.png';
-
 export const Footer = ({ isMobile = false }) => {
   const styles = {
     footer: {
@@ -19,29 +15,40 @@ export const Footer = ({ isMobile = false }) => {
       margin: '0 auto',
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-      gap: '3rem',
+      gap: isMobile ? '2.5rem' : '4rem',
     },
     brandArea: {
       display: 'flex',
       flexDirection: isMobile ? 'column' : 'row',
       alignItems: isMobile ? 'flex-start' : 'center',
       gap: isMobile ? '1.5rem' : '2.5rem',
-      marginBottom: isMobile ? '1.5rem' : '2rem',
+      marginBottom: isMobile ? '2rem' : '2.5rem',
+    },
+    logoWrapper: {
+      background: "white",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "6px",
+      borderRadius: "6px",
+      width: isMobile ? '140px' : '180px',
+      height: isMobile ? '70px' : '90px',
     },
     logo: {
-      height: isMobile ? '60px' : '80px',
-      width: 'auto',
+      maxHeight: '100%',
+      maxWidth: '100%',
       objectFit: 'contain',
     },
     footerTitle: {
-      fontSize: isMobile ? '1.5rem' : '2rem',
+      fontSize: isMobile ? '1.6rem' : '2rem',
       fontWeight: '600',
-      marginBottom: '1rem',
+      marginBottom: '1.2rem',
     },
     footerText: {
-      fontSize: isMobile ? '1rem' : '1.125rem',
+      fontSize: isMobile ? '0.95rem' : '1.1rem',
       color: '#cbd5e1',
-      lineHeight: '1.6',
+      lineHeight: '1.65',
+      maxWidth: isMobile ? '100%' : '480px',
     },
     footerRight: {
       textAlign: isMobile ? 'left' : 'right',
@@ -49,21 +56,22 @@ export const Footer = ({ isMobile = false }) => {
     iconRow: {
       display: 'flex',
       justifyContent: isMobile ? 'flex-start' : 'flex-end',
-      gap: '1.25rem',
-      marginTop: '1.5rem',
+      gap: '1.5rem',
+      marginTop: '1.8rem',
     },
     iconLink: {
       color: '#cbd5e1',
-      fontSize: '1.5rem',
-      transition: 'color 0.3s ease',
+      fontSize: isMobile ? '1.7rem' : '1.9rem',
+      transition: 'color 0.3s ease, transform 0.2s ease',
     },
     contactItem: {
       display: 'flex',
-      gap: '10px',
       alignItems: 'center',
+      gap: '12px',
       color: '#cbd5e1',
       textDecoration: 'none',
-      marginBottom: '0.75rem',
+      fontSize: isMobile ? '1rem' : '1.1rem',
+      marginBottom: '1rem',
       transition: 'color 0.3s ease',
     },
   };
@@ -75,22 +83,18 @@ export const Footer = ({ isMobile = false }) => {
         <div>
           <div style={styles.brandArea}>
             {/* NS Logo */}
-            <div style={{ background: "white", display: "flex", justifyContent: "center", alignItems: "center", padding: "4px" }}>
+            <div style={styles.logoWrapper}>
               <img
                 src="/image/nslogo.jpg"
-                // Replace with real path when ready:
-                // src={nsLogo}
                 alt="NS Logo"
                 style={styles.logo}
               />
             </div>
 
             {/* SME Oceanways Logo */}
-            <div style={{ background: "white", display: "flex", justifyContent: "center", alignItems: "center", padding: "4px" }}>
+            <div style={styles.logoWrapper}>
               <img
                 src="/image/logos.png"
-                // Replace with real path when ready:
-                // src={smeOceanwaysLogo}
                 alt="SME Oceanways Logo"
                 style={styles.logo}
               />
@@ -137,8 +141,14 @@ export const Footer = ({ isMobile = false }) => {
               target="_blank"
               rel="noreferrer"
               style={styles.iconLink}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#FF6B47')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#cbd5e1')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#FF6B47';
+                e.currentTarget.style.transform = 'scale(1.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#cbd5e1';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
             >
               <FaInstagram />
             </a>
@@ -148,8 +158,14 @@ export const Footer = ({ isMobile = false }) => {
               target="_blank"
               rel="noreferrer"
               style={styles.iconLink}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#FF6B47')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#cbd5e1')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#FF6B47';
+                e.currentTarget.style.transform = 'scale(1.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#cbd5e1';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
             >
               <FaLinkedinIn />
             </a>
@@ -159,8 +175,14 @@ export const Footer = ({ isMobile = false }) => {
               target="_blank"
               rel="noreferrer"
               style={styles.iconLink}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#FF6B47')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#cbd5e1')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#FF6B47';
+                e.currentTarget.style.transform = 'scale(1.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#cbd5e1';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
             >
               <FaFacebookF />
             </a>

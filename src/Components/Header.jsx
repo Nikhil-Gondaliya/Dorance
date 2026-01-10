@@ -16,14 +16,19 @@ export const Header = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (window.innerWidth >= 1024) setMobileMenuOpen(false);
     const handleResize = () => {
-      if (window.innerWidth >= 1024) setMobileMenuOpen(false);
+      if (window.innerWidth >= 1024) {
+        setMobileMenuOpen(false);
+      }
     };
+
     window.addEventListener('resize', handleResize);
+    // Initial check
+    handleResize();
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  // about-us
+
   const navLinks = [
     { id: 'home', label: 'Home', path: '/' },
     { id: 'products', label: 'Products', path: '/products' },
@@ -50,7 +55,7 @@ export const Header = () => {
             />
           </div>
 
-          {/* Center - Navigation */}
+          {/* Center - Navigation (desktop) */}
           <nav className="main-nav desktop-nav">
             {navLinks.map((link) => (
               <button
@@ -63,7 +68,7 @@ export const Header = () => {
             ))}
           </nav>
 
-          {/* Right - Contact */}
+          {/* Right - Contact (desktop) */}
           <div className="contact-info desktop-contact">
             <a href="tel:+918217524980" className="contact-link">
               <Phone size={16} />
@@ -111,4 +116,4 @@ export const Header = () => {
       </div>
     </header>
   );
-}
+};

@@ -4,6 +4,8 @@ import { Header } from '../../Components/Header';
 import { useNavigate } from 'react-router-dom';
 import { ImageCard } from '../../Components/ImageCard';
 import { Footer } from '../../Components/Footer';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const mainImges = [
   "/image/doorClose.jpg",
@@ -28,6 +30,27 @@ export function HomePage() {
 
 
   const navigate = useNavigate()
+
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -157,7 +180,8 @@ export function HomePage() {
       backgroundColor: '#ffffffff',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: isMobile ? '300px' : 'auto'
+      minHeight: isMobile ? '300px' : 'auto',
+      paddingTop: "20%"
     },
 
     // Background Section Styles
@@ -286,55 +310,15 @@ export function HomePage() {
       objectFit: 'cover'
     },
 
-    // Testimonial Section Styles
-    testimonialSection: {
-      padding: isMobile ? '4rem 1.5rem' : '8rem 4rem',
-      backgroundColor: '#f8f9fa'
-    },
-    testimonialContainer: {
-      maxWidth: '1200px',
-      margin: '0 auto',
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : '2fr 3fr',
-      gap: isMobile ? '2rem' : '6rem',
-      alignItems: 'center'
-    },
-    testimonialImage: {
-      width: '100%',
-      aspectRatio: '1',
-      borderRadius: '8px',
-      objectFit: 'cover',
-      backgroundColor: '#cbd5e1'
-    },
-    testimonialQuote: {
-      fontSize: isMobile ? '1.125rem' : '1.5rem',
-      color: '#2c3e5f',
-      lineHeight: '1.7',
-      marginBottom: '2rem',
-      fontStyle: 'italic'
-    },
-    testimonialAuthor: {
-      fontSize: isMobile ? '1rem' : '1.125rem',
-      color: '#2c3e5f',
-      fontWeight: '600',
-      margin: '0.5rem 0'
-    },
-    testimonialRole: {
-      fontSize: isMobile ? '0.875rem' : '1rem',
-      color: '#64748b',
-      fontStyle: 'italic',
-      margin: '0.25rem 0'
-    },
-
     // Work Approach Section Styles
     approachSection: {
       padding: isMobile ? '4rem 1.5rem' : '8rem 4rem',
-      backgroundColor: '#c9d5ff',
+      backgroundColor: '#ffffffff',
       textAlign: 'center'
     },
     approachTitle: {
       fontSize: isMobile ? '2rem' : '3.5rem',
-      color: '#ffffff',
+      color: '#000000ff',
       fontWeight: '400',
       maxWidth: '900px',
       margin: '2rem auto 3rem',
@@ -436,17 +420,24 @@ export function HomePage() {
             </p>
           </div>
         </div>
+
         <div style={styles.heroRight}>
-          <div
-            style={{
-              display: "flex",
-              width: `${mainImges.length * 100}%`,
-              transform: `translateX(-${currentIndex * (100 / mainImges.length)}%)`,
-              transition: "transform 0.6s ease-in-out",
-              position: "absolute",
-              top: "12%",
-              left: 0
-            }}
+          <Carousel responsive={responsive}
+            swipeable={false}
+            draggable={false}
+            ssr={true} // means to render carousel on server-side.
+            infinite={true}
+            autoPlay={true}
+            autoPlaySpeed={1000}
+            keyBoardControl={true}
+            customTransition="all .5"
+            transitionDuration={500}
+            containerClass="carousel-container"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+            arrows={false}
+
           >
             {mainImges.map((img, index) => (
               <img
@@ -454,14 +445,11 @@ export function HomePage() {
                 src={img}
                 alt="SMEOCEANWAYS Product"
                 style={{
-                  width: `${100 / mainImges.length}%`,
-                  maxWidth: "675px",
-                  maxHeight: "450px",
-                  objectFit: "contain"
+                  width: `${100}%`,
                 }}
               />
             ))}
-          </div>
+          </Carousel>;
         </div>
 
 
@@ -538,23 +526,6 @@ export function HomePage() {
             <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} />
             <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/gs.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} />
             <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} />
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial Section */}
-      <section style={styles.testimonialSection}>
-        <div style={styles.testimonialContainer}>
-          <div>
-            <div style={styles.testimonialImage}></div>
-          </div>
-          <div>
-            <p style={styles.testimonialQuote}>
-              "SMEOCEANWAYS has been our trusted partner for over five years. Their commitment to quality and attention to detail is exceptional. The doors and windows we've installed have exceeded our expectations in both durability and design. Their team is professional, responsive, and truly understands the needs of modern construction projects."
-            </p>
-            <p style={styles.testimonialAuthor}>Rajesh Patel</p>
-            <p style={styles.testimonialRole}>Project Manager</p>
-            <p style={styles.testimonialRole}>Urban Builders & Associates</p>
           </div>
         </div>
       </section>
