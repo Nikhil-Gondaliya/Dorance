@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { productsData } from '../../data';
 import { Header } from '../../Components/Header';
 import { Footer } from '../../Components/Footer';
+import { MessageCircleMore, Phone } from 'lucide-react';
 
 export const ProductsPage = () => {
   const styles = {
@@ -14,31 +15,32 @@ export const ProductsPage = () => {
     header: {
       background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)',
       color: '#ffffff',
-      padding: '5rem 2rem 6rem',
+      padding: 'clamp(4rem, 8vw, 7rem) 1.5rem 8rem',
       textAlign: 'center',
       position: 'relative',
       overflow: 'hidden'
     },
     headerTitle: {
-      fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+      fontSize: 'clamp(2.3rem, 6.5vw, 4.5rem)',
       fontWeight: '600',
-      margin: '0 0 1rem 0',
-      letterSpacing: '-0.02em'
+      margin: '1.2rem 0 1rem 0',
+      letterSpacing: '-0.02em',
+      lineHeight: '1.1'
     },
     headerSubtitle: {
-      fontSize: '1.25rem',
-      maxWidth: '720px',
+      fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)',
+      maxWidth: '820px',
       margin: '0 auto',
       opacity: 0.9,
-      lineHeight: 1.6
+      lineHeight: 1.5
     },
     grid: {
       maxWidth: '1400px',
-      margin: '-4rem auto 4rem',
+      margin: '-5rem auto 4rem',
       padding: '0 1.5rem',
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-      gap: '2rem'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: 'clamp(1.5rem, 3vw, 2.2rem)'
     },
     card: {
       backgroundColor: '#ffffff',
@@ -48,7 +50,9 @@ export const ProductsPage = () => {
       transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
       textDecoration: 'none',
       color: 'inherit',
-      position: 'relative'
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column'
     },
     cardHover: {
       transform: 'translateY(-12px)',
@@ -56,32 +60,92 @@ export const ProductsPage = () => {
     },
     image: {
       width: '100%',
-      height: '260px',
+      height: 'clamp(220px, 28vw, 280px)',
       objectFit: 'cover',
-      backgroundColor: '#e2e8f0'
+      backgroundColor: '#e2e8f0',
+      flexShrink: 0
     },
     content: {
-      padding: '1.75rem'
+      padding: 'clamp(1.4rem, 2vw, 1.75rem)',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 1
     },
     category: {
       color: '#e85d04',
-      fontSize: '0.9rem',
+      fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
       fontWeight: '700',
       textTransform: 'uppercase',
       letterSpacing: '0.08em',
-      marginBottom: '0.75rem'
+      marginBottom: '0.8rem'
     },
     title: {
-      fontSize: '1.6rem',
+      fontSize: 'clamp(1.4rem, 2.5vw, 1.65rem)',
       fontWeight: '700',
       color: '#0f172a',
-      margin: '0 0 1rem 0'
+      margin: '0 0 1rem 0',
+      lineHeight: '1.25'
     },
     description: {
-      fontSize: '1rem',
+      fontSize: 'clamp(0.92rem, 1.8vw, 1rem)',
       color: '#64748b',
       lineHeight: 1.6,
-      margin: 0
+      margin: 0,
+      flexGrow: 1
+    },
+
+    // CTA section
+    ctaWrapper: {
+      textAlign: 'center',
+      padding: 'clamp(3rem, 6vw, 5rem) 1.5rem',
+      backgroundColor: '#f1f5f9'
+    },
+    ctaTitle: {
+      fontSize: 'clamp(1.8rem, 4.5vw, 2.6rem)',
+      color: '#0f172a',
+      marginBottom: '1.2rem'
+    },
+    ctaText: {
+      fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
+      color: '#475569',
+      maxWidth: '680px',
+      margin: '0 auto 2rem',
+      lineHeight: 1.5
+    },
+    ctaButtonsContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      gap: 'clamp(1rem, 2.5vw, 1.5rem)',
+      flexWrap: 'wrap'
+    },
+    ctaButton: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.6rem',
+      padding: 'clamp(0.9rem, 2vw, 1.1rem) clamp(1.8rem, 3vw, 2.4rem)',
+      backgroundColor: '#e85d04',
+      color: 'white',
+      fontSize: 'clamp(1rem, 2.2vw, 1.1rem)',
+      fontWeight: '600',
+      borderRadius: '50px',
+      textDecoration: 'none',
+      transition: 'all 0.3s ease',
+      justifyContent: "center"
+    },
+    whatsappButton: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.6rem',
+      padding: 'clamp(0.9rem, 2vw, 1.1rem) clamp(1.8rem, 3vw, 2.4rem)',
+      backgroundColor: '#25D366', // Official WhatsApp green
+      color: 'white',
+      fontSize: 'clamp(1rem, 2.2vw, 1.1rem)',
+      fontWeight: '600',
+      borderRadius: '50px',
+      textDecoration: 'none',
+      transition: 'all 0.3s ease',
+      justifyContent: "center"
     }
   };
 
@@ -124,33 +188,48 @@ export const ProductsPage = () => {
         ))}
       </section>
 
-      {/* Optional CTA strip */}
-      <div style={{
-        textAlign: 'center',
-        padding: '4rem 1rem',
-        backgroundColor: '#f1f5f9'
-      }}>
-        <h2 style={{ fontSize: '2.2rem', color: '#0f172a', marginBottom: '1.5rem' }}>
+      {/* CTA strip with Call + WhatsApp */}
+      <div style={styles.ctaWrapper}>
+        <h2 style={styles.ctaTitle}>
           Need More Information?
         </h2>
-        <p style={{ fontSize: '1.2rem', color: '#475569', maxWidth: '600px', margin: '0 auto 2rem' }}>
+        <p style={styles.ctaText}>
           Bring your vision to life with bespoke work. We're ready when you are!
         </p>
-        <a
-          href="tel:+918217524980"
-          style={{
-            display: 'inline-block',
-            padding: '1rem 2.2rem',
-            backgroundColor: '#e85d04',
-            color: 'white',
-            fontSize: '1.1rem',
-            fontWeight: '600',
-            borderRadius: '50px',
-            textDecoration: 'none'
-          }}
-        >
-          Call: +91 82175 24980
-        </a>
+
+        <div style={styles.ctaButtonsContainer}>
+          <a
+            href="tel:+918217524980"
+            style={styles.ctaButton}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = '0 12px 24px rgba(232,93,4,0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <Phone /> +91 82175 24980
+          </a>
+
+          <a
+            href="https://wa.me/+918217524980"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.whatsappButton}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = '0 12px 24px rgba(37,213,102,0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <MessageCircleMore />   Chat on WhatsApp
+          </a>
+        </div>
       </div>
 
       <Footer />

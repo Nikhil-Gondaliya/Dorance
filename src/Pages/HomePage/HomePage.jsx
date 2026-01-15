@@ -6,6 +6,7 @@ import { ImageCard } from '../../Components/ImageCard';
 import { Footer } from '../../Components/Footer';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { MoveRight } from 'lucide-react';
 
 const mainImges = [
   "/image/doorClose.jpg",
@@ -126,56 +127,67 @@ export function HomePage() {
     navLinks: {
       color: 'white',
       textDecoration: 'none',
-      fontSize: '1rem',
+      fontSize: '1.2rem',
       cursor: 'pointer',
       background: 'none',
       border: 'none',
       fontFamily: 'inherit',
       padding: '0.5rem 0',
       borderBottom: '2px solid transparent',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.3s ease',
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "10px"
     },
     navLinkActive: {
       borderBottom: '2px solid #1e293b'
     },
 
     // Hero Section Styles
+    // Hero Section Styles
     heroSection: {
       marginTop: '80px',
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-      minHeight: isMobile ? 'auto' : '600px'
+      minHeight: isMobile ? 'auto' : '600px',
+      // Optional: better mobile flow
+      gap: isMobile ? '0' : '0', // no gap needed when stacked
     },
+
     heroLeft: {
       backgroundColor: '#2c3e5f',
-      padding: isMobile ? '3rem 1.5rem' : '5rem 4rem',
+      padding: isMobile ? '2.5rem 1.2rem' : '5rem 4rem',   // ← reduced padding on mobile
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'center',   // ← center content better on mobile
     },
+
     heroContent: {
-      maxWidth: '600px',
+      maxWidth: isMobile ? '100%' : '600px',          // ← prevent overflow
       marginLeft: isMobile ? '0' : '1.2rem',
       display: "flex",
       flexDirection: "column",
-      gap: "10px"
+      gap: isMobile ? "16px" : "10px",               // ← slightly more breathing room
+      alignItems: isMobile ? "center" : "flex-start", // ← center on mobile
     },
+
     heroTitle: {
-      fontSize: isMobile ? '2.5rem' : '4.5rem',
-      fontWeight: '300',
-      color: '#ffffff',
-      margin: '0 0 1.5rem 0',
-      lineHeight: '1.1',
-      letterSpacing: '-0.02em'
+      // You don't have title anymore → removed or keep if needed
     },
+
     heroSubtitle: {
-      fontSize: isMobile ? '1rem' : '1.5rem',
+      fontSize: isMobile ? '1.1rem' : '1.5rem',
       color: '#ffffff',
       margin: 0,
-      lineHeight: '1.6',
+      lineHeight: '1.5',
       fontWeight: '300',
       opacity: '0.95',
-      textAlign: "center"
+      textAlign: isMobile ? "center" : "left",       // ← ensure centered only on mobile
+      maxWidth: isMobile ? '90%' : 'none',           // ← prevent very long lines
     },
+
     heroRight: {
       backgroundColor: '#ffffffff',
       position: 'relative',
@@ -186,13 +198,13 @@ export function HomePage() {
 
     // Background Section Styles
     backgroundSection: {
-      padding: isMobile ? '4rem 1.5rem' : '8rem 4rem',
+      padding: isMobile ? '3rem 1.5rem' : '5rem 4rem',
       backgroundColor: '#f8f9fa',
       textAlign: 'center'
     },
     sectionLabel: {
       color: '#FF6B47',
-      fontSize: '0.875rem',
+      fontSize: '1.2rem',
       fontWeight: '600',
       letterSpacing: '0.1em',
       textTransform: 'uppercase',
@@ -209,22 +221,22 @@ export function HomePage() {
 
     // Services Section Styles
     servicesSection: {
-      padding: isMobile ? '4rem 1.5rem' : '8rem 4rem',
+      padding: isMobile ? '3rem 1.5rem' : '5rem 4rem',
       backgroundColor: '#ffffff'
     },
     servicesTitle: {
-      fontSize: isMobile ? '2rem' : '3.5rem',
+      fontSize: isMobile ? '1rem' : '3.5rem',
       color: '#2c3e5f',
       fontWeight: '400',
       textAlign: 'center',
-      margin: '1rem 0 3rem 0'
+      margin: '0.5rem 0 2rem 0'
     },
     servicesGrid: {
       maxWidth: '1200px',
       margin: '0 auto',
       display: 'grid',
       gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-      gap: isMobile ? '3rem' : '5rem 8rem'
+      gap: isMobile ? '1rem' : '3rem 8rem'
     },
     serviceItem: {
       textAlign: 'center'
@@ -413,8 +425,13 @@ export function HomePage() {
       <section id="home" style={styles.heroSection}>
         <div style={styles.heroLeft}>
           <div style={styles.heroContent}>
-            <img src='/image/smeLogo.jpg' alt="SME" width="500px" />
-
+            <img
+              src='/image/smeLogo.jpg'
+              alt="SME"
+              width={isMobile ? 260 : 500}
+              height={isMobile ? 80 : 150} // if you know approx aspect ratio
+              style={{ height: 'auto' }}
+            />
             <p style={styles.heroSubtitle}>
               Where Quality Meets Global Trade.
             </p>
@@ -423,7 +440,7 @@ export function HomePage() {
 
         <div style={styles.heroRight}>
           <Carousel responsive={responsive}
-            swipeable={false}
+            swipeable={true}
             draggable={false}
             ssr={true} // means to render carousel on server-side.
             infinite={true}
@@ -458,8 +475,7 @@ export function HomePage() {
       <section style={styles.backgroundSection}>
         <p style={styles.sectionLabel}>ABOUT SMEOCEANWAYS</p>
         <p style={styles.backgroundText}>
-          SME OCEAN WAYS is a reliable manufacturer and supplier of premium door closer, kitchen equipment, submersible pumps, and hardware products. We focus on delivering durable, high-performance solutions designed for commercial and industrial use. With quality craftsmanship and customer-first service, we provide products that ensure efficiency, safety, and long-term value for every project.
-        </p>
+          SME Oceanways is a reliable manufacturer and supplier of door closers, sleeve & liners, commercial gas stoves, and submersible pumps. We deliver high-performance, durable products for industrial, commercial, and hospitality sectors, ensuring quality, efficiency, and long-term reliability for our global customers. </p>
       </section>
 
       {/* Services Section */}
@@ -476,10 +492,9 @@ export function HomePage() {
           </div>
 
           <div style={styles.serviceItem}>
-            <h4 style={styles.serviceTitle}>Kitchen Equipment</h4>
+            <h4 style={styles.serviceTitle}>Sleeve & Liners </h4>
             <p style={styles.serviceDescription}>
-              A complete range of stainless-steel kitchen solutions including dosa bhatti, shawarma machines, idli steamers, and food-service workstations with superior durability and hygiene.
-            </p>
+              High-quality engine sleeves and liners engineered for automotive, agricultural, and industrial engines. Built for superior durability, wear resistance, and consistent performance, ensuring extended engine life and reliability. </p>
           </div>
 
           <div style={styles.serviceItem}>
@@ -490,7 +505,7 @@ export function HomePage() {
           </div>
 
           <div style={styles.serviceItem}>
-            <h4 style={styles.serviceTitle}>Door Hardware & Closers</h4>
+            <h4 style={styles.serviceTitle}>Door Closers</h4>
             <p style={styles.serviceDescription}>
               Smooth and secure door closer mechanisms and essential hardware that improve safety and operational convenience for commercial and residential use.
             </p>
@@ -507,7 +522,7 @@ export function HomePage() {
               Browse our complete<br />product range
             </h3>
             <p style={styles.projectsText}>
-              Discover our comprehensive collection of doors and windows. From classic designs to contemporary styles, we offer solutions for every architectural need. Download our catalogue to explore detailed specifications, dimensions, and finishes.
+              Our product range includes precision-engineered door closers, high-quality sleeves & liners, professional gas stoves, and reliable submersible pumps, developed to support demanding industrial, commercial, and hospitality environments worldwide. Download our catalogue to explore detailed specifications, dimensions, and finishes.
             </p>
             <button
               onClick={() => navigate("/products")}
@@ -515,16 +530,17 @@ export function HomePage() {
               onMouseEnter={(e) => e.target.style.borderBottom = '2px solid white'}
               onMouseLeave={(e) => e.target.style.borderBottom = '2px solid transparent'}
             >
-              View Products
+              View Products <MoveRight style={{ border: "none" }} />
             </button>
           </div>
         </div>
+
         <div style={styles.projectsRight}>
           <div style={styles.projectsGrid}>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/dooforpfd.jpg" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} />
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} />
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/gs.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} />
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/dooforpfd.jpg" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} isMobile={isMobile}/>
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} isMobile={isMobile}/>
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/gs.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} isMobile={isMobile}/>
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} isMobile={isMobile}/>
           </div>
         </div>
       </section>

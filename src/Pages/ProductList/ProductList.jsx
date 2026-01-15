@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getAllProducts, saveProducts } from "../../db/db";
-import AddProduct from "../AddProduct/AddProduct"; // 🔁 adjust path if needed
+import AddProduct from "../AddProduct/AddProduct";
 
 export default function ProductTable() {
   const [data, setData] = useState([]);
-
-  // delete dialog
   const [open, setOpen] = useState(false);
   const [deleteInfo, setDeleteInfo] = useState(null);
-
-  // add product dialog
   const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
@@ -20,8 +16,6 @@ export default function ProductTable() {
     const stored = await getAllProducts();
     setData(stored || []);
   };
-
-  /* ================= DELETE ================= */
 
   const handleDeleteClick = (categoryId, subProductId) => {
     setDeleteInfo({ categoryId, subProductId });
@@ -55,24 +49,24 @@ export default function ProductTable() {
     setDeleteInfo(null);
   };
 
+  console.log(data)
+
   return (
-    <div style={styles.page}>
+    <div style={styles.container}>
       <div style={styles.card}>
-
-        {/* ===== HEADER ===== */}
+        {/* Header */}
         <div style={styles.header}>
-          <h2 style={styles.title}>Products Table</h2>
-
+          <h2 style={styles.title}>Products</h2>
           <button
-            style={styles.addBtn}
+            style={styles.addButton}
             onClick={() => setAddOpen(true)}
           >
             + Add Product
           </button>
         </div>
 
-        {/* ===== TABLE ===== */}
-        <div style={styles.tableWrapper}>
+        {/* Table */}
+        <div style={styles.tableContainer}>
           <table style={styles.table}>
             <thead>
               <tr>
@@ -84,245 +78,242 @@ export default function ProductTable() {
                 <th style={{ ...styles.th, textAlign: "center" }}>Actions</th>
               </tr>
             </thead>
-
             <tbody>
-              {data.length === 0 && (
+              {data.flatMap(cat => (cat.subProducts || []).map((sub, idx) => ({
+                category: cat,
+                sub,
+                rowIndex: idx
+              }))).length === 0 ? (
                 <tr>
-                  <td colSpan="6" style={styles.empty}>
-                    No products found
+                  <td colSpan={6} style={styles.emptyState}>
+                    No products added yet.
                   </td>
                 </tr>
-              )}
-
-              {data.map((cat) =>
-                (cat.subProducts || []).map((sub, index) => (
-                  <tr
-                    key={sub.id}
-                    style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}
-                  >
-                    <td style={styles.td}>{cat.title}</td>
-                    <td style={styles.tdStrong}>{sub.name}</td>
-
-                    <td style={{ ...styles.td, textAlign: "center" }}>
-                      {sub.image ? (
-                        <img
-                          src={sub.image}
-                          alt={sub.name}
-                          style={styles.image}
-                        />
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-
-                    <td style={styles.td}>₹ {sub.price || 0}</td>
-
-                    <td style={styles.tdDescription} title={sub.description}>
-                      {sub.description || "—"}
-                    </td>
-
-                    <td style={{ ...styles.td, textAlign: "center" }}>
-                      <button
-                        style={styles.deleteBtn}
-                        onClick={() =>
-                          handleDeleteClick(cat.id, sub.id)
-                        }
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
+              ) : (
+                data.map((cat) =>
+                  (cat.subProducts || []).map((sub, index) => (
+                    <tr
+                      key={sub.id}
+                      style={{
+                        ...styles.row,
+                        backgroundColor: index % 2 === 0 ? "#ffffff" : "#f9fafb",
+                      }}
+                    >
+                      <td style={styles.td}>{cat.title}</td>
+                      <td style={{ ...styles.td, fontWeight: 600 }}>{sub.name}</td>
+                      <td style={{ ...styles.td, textAlign: "center" }}>
+                        {sub.image ? <img src={sub.image} alt={sub.name} style={styles.productImage} /> : "—"}
+                      </td>
+                      <td style={styles.td}>₹{sub.price?.toLocaleString() || "0"}</td>
+                      <td style={styles.descriptionCell} title={sub.description}>
+                        {sub.description || "—"}
+                      </td>
+                      <td style={{ ...styles.td, textAlign: "center" }}>
+                        <button
+                          style={styles.deleteButton}
+                          onClick={() => handleDeleteClick(cat.id, sub.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* ===== DELETE CONFIRMATION DIALOG ===== */}
+      {/* Delete Confirmation */}
       {open && (
-        <div style={styles.overlay}>
-          <div style={styles.dialog}>
-            <h3 style={styles.dialogTitle}>
-              Are you sure you want to delete this?
-            </h3>
-
-            <div style={styles.dialogActions}>
-              <button style={styles.noBtn} onClick={handleCancelDelete}>
-                No
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h3 style={styles.modalTitle}>Delete Product</h3>
+            <p style={styles.modalText}>
+              Are you sure you want to delete this product?
+            </p>
+            <div style={styles.modalActions}>
+              <button style={styles.cancelBtn} onClick={handleCancelDelete}>
+                Cancel
               </button>
-              <button style={styles.yesBtn} onClick={handleConfirmDelete}>
-                Yes
+              <button style={styles.confirmBtn} onClick={handleConfirmDelete}>
+                Delete
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ===== ADD PRODUCT DIALOG ===== */}
+      {/* Add Product Dialog */}
       {addOpen && (
-        <div style={styles.overlay}>
-          <AddProduct
-            onClose={() => setAddOpen(false)}
-            onSuccess={() => {
-              setAddOpen(false);
-              loadData();
-            }}
-          />
+        <div style={styles.modalOverlay}>
+          <div style={styles.addModal}>
+            <AddProduct
+              onClose={() => setAddOpen(false)}
+              onSuccess={() => {
+                setAddOpen(false);
+                loadData();
+              }}
+            />
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-/* ================= STYLES ================= */
-
+/* ================= IMPROVED STYLES ================= */
 const styles = {
-  page: {
+  container: {
     minHeight: "100vh",
-    background: "#f5f7fb",
-    padding: "3rem",
+    background: "#f8fafc",
+    padding: "2rem 1rem",
   },
   card: {
-    maxWidth: "1200px",
+    maxWidth: "1400px",
     margin: "0 auto",
     background: "#ffffff",
-    borderRadius: "12px",
-    padding: "2rem",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+    borderRadius: "16px",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
+    overflow: "hidden",
   },
-
-  /* Header */
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "1.5rem",
+    padding: "1.5rem 2rem",
+    borderBottom: "1px solid #e2e8f0",
   },
   title: {
-    fontSize: "1.8rem",
-    color: "#1e293b",
+    margin: 0,
+    fontSize: "1.75rem",
+    fontWeight: 700,
+    color: "#0f172a",
   },
-  addBtn: {
-    background: "#2563eb",
-    color: "#fff",
+  addButton: {
+    background: "#3b82f6",
+    color: "white",
     border: "none",
-    padding: "10px 18px",
+    padding: "10px 20px",
     borderRadius: "8px",
+    fontWeight: 600,
     cursor: "pointer",
-    fontWeight: 600,
+    transition: "background 0.2s",
   },
-
-  /* Table */
-  tableWrapper: { overflowX: "auto" },
-  table: { width: "100%", borderCollapse: "collapse" },
+  tableContainer: {
+    overflowX: "auto",
+  },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+  },
   th: {
-    padding: "14px",
+    padding: "14px 16px",
     background: "#f1f5f9",
-    borderBottom: "2px solid #e2e8f0",
+    textAlign: "left",
     fontWeight: 600,
+    color: "#334155",
+    borderBottom: "2px solid #e2e8f0",
   },
   td: {
-    padding: "14px",
+    padding: "16px",
     borderBottom: "1px solid #e5e7eb",
+    color: "#1e293b",
   },
-  tdStrong: {
-    padding: "14px",
+  descriptionCell: {
+    padding: "16px",
     borderBottom: "1px solid #e5e7eb",
-    fontWeight: 600,
-  },
-  tdDescription: {
-    padding: "14px",
-    borderBottom: "1px solid #e5e7eb",
-    maxWidth: "380px",
+    maxWidth: "400px",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    color: "#475569",
   },
-  image: {
-    width: "56px",
-    height: "56px",
+  productImage: {
+    width: "64px",
+    height: "64px",
     objectFit: "cover",
     borderRadius: "8px",
     border: "1px solid #e5e7eb",
   },
-  deleteBtn: {
+  deleteButton: {
     background: "#ef4444",
-    color: "#fff",
+    color: "white",
     border: "none",
-    padding: "6px 14px",
+    padding: "8px 16px",
     borderRadius: "6px",
-    cursor: "pointer",
     fontSize: "0.9rem",
+    fontWeight: 500,
+    cursor: "pointer",
+    transition: "background 0.2s",
   },
-  rowEven: { background: "#ffffff" },
-  rowOdd: { background: "#f9fafb" },
-  empty: {
+  row: {
+    transition: "background-color 0.2s",
+  },
+  emptyState: {
+    padding: "4rem 2rem",
     textAlign: "center",
-    padding: "2rem",
     color: "#64748b",
+    fontSize: "1.1rem",
   },
 
-  /* Overlay + dialogs */
-  overlay: {
+  // Modal
+  modalOverlay: {
     position: "fixed",
     inset: 0,
-    background: "rgba(0,0,0,0.4)",
+    background: "rgba(0,0,0,0.5)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     zIndex: 1000,
   },
-  dialog: {
-    background: "#fff",
+  modal: {
+    background: "white",
+    borderRadius: "12px",
     padding: "2rem",
-    borderRadius: "10px",
-    width: "360px",
+    width: "380px",
     textAlign: "center",
+    boxShadow: "0 20px 25px rgba(0,0,0,0.2)",
   },
-  dialogLarge: {
-    background: "#fff",
-    width: "650px",
+  addModal: {
+    background: "white",
+    borderRadius: "12px",
+    width: "90%",
+    maxWidth: "460px",
     maxHeight: "90vh",
     overflowY: "auto",
-    borderRadius: "12px",
-    padding: "1.5rem",
   },
-  dialogHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "1rem",
+  modalTitle: {
+    margin: "0 0 1rem 0",
+    fontSize: "1.4rem",
+    color: "#1e293b",
   },
-  dialogTitle: {
-    marginBottom: "1.5rem",
-    fontSize: "1.1rem",
+  modalText: {
+    margin: "0 0 2rem 0",
+    color: "#475569",
   },
-  dialogActions: {
+  modalActions: {
     display: "flex",
     gap: "1rem",
   },
-  noBtn: {
+  cancelBtn: {
     flex: 1,
-    padding: "10px",
-    borderRadius: "6px",
-    border: "1px solid #cbd5f5",
-    background: "#fff",
+    padding: "12px",
+    border: "1px solid #cbd5e1",
+    borderRadius: "8px",
+    background: "white",
     cursor: "pointer",
+    fontWeight: 500,
   },
-  yesBtn: {
+  confirmBtn: {
     flex: 1,
-    padding: "10px",
-    borderRadius: "6px",
+    padding: "12px",
     border: "none",
+    borderRadius: "8px",
     background: "#ef4444",
-    color: "#fff",
-    cursor: "pointer",
-  },
-  closeBtn: {
-    border: "none",
-    background: "transparent",
-    fontSize: "1.4rem",
+    color: "white",
+    fontWeight: 500,
     cursor: "pointer",
   },
 };

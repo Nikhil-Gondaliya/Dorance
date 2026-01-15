@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const ImageCard = ({ styles, imgUrl, onClick, buttonLabel }) => {
+export const ImageCard = ({ styles, imgUrl, onClick, buttonLabel, isMobile }) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -75,13 +75,13 @@ export const ImageCard = ({ styles, imgUrl, onClick, buttonLabel }) => {
               border: "none",
               padding: "10px 20px",
               borderRadius: "30px",
-              fontSize: "14px",
+              fontSize: isMobile ? "10px" : "14px",
               fontWeight: "600",
               cursor: "pointer",
               boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
             }}
           >
-            ⬇ Download Catalogue
+            Download Catalogue
           </button>
         </div>
 

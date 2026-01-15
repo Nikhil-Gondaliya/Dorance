@@ -31,9 +31,9 @@ export const Header = () => {
 
   const navLinks = [
     { id: 'home', label: 'Home', path: '/' },
+    { id: 'about-us', label: 'About Us', path: '/about-us' },
     { id: 'products', label: 'Products', path: '/products' },
     { id: 'contact', label: 'Contact', path: '/contact' },
-    { id: 'about-us', label: 'About Us', path: '/about-us' },
   ];
 
   const handleNavClick = (path, id) => {

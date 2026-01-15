@@ -167,7 +167,7 @@ export default function AddProduct({ onClose, onSuccess }) {
 
 const styles = {
   modal: {
-    width: 460,
+    width: "100%",
     background: "#ffffff",
     borderRadius: 12,
     boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
