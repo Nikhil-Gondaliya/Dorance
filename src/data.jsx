@@ -6,8 +6,8 @@ export const productsData = [
     description: "High-quality compact, scissor arm, track arm and heavy-duty door closers",
     image: "image/doorClose.jpg",
     fullDescription:
-      "SMEOceanways offers a wide range of premium door closers including compact door closers, scissor arm door closers, track arm door closers, and heavy-duty models. Designed for smooth operation, durability, and compliance with IS standards, these door closers are suitable for residential, commercial, and industrial doors.",
-    client: "SMEOceanways",
+      "SME Oceanways offers a wide range of premium door closers including compact door closers, scissor arm door closers, track arm door closers, and heavy-duty models. Designed for smooth operation, durability, and compliance with IS standards, these door closers are suitable for residential, commercial, and industrial doors.",
+    client: "SME Oceanways",
     year: "2024",
     services: [
       "Compact Door Closers",
@@ -24,38 +24,14 @@ export const productsData = [
   },
 
   {
-    id: 2,
-    title: "Commercial Gas Stoves & Kitchen Equipment",
-    category: "Commercial Kitchen Equipment",
-    description: "Professional-grade gas stoves and kitchen solutions",
-    image: "image/mainStove.png",
-    fullDescription:
-      "Our commercial kitchen range includes square stoves, round stoves, double burners, dosa bhatti, chapati bhatti, shawarma machines, gas ranges, idli steamers, food carts, and customized kitchen equipment. Built with stainless steel and designed for high-efficiency cooking in hotels, restaurants, and catering units.",
-    client: "SMEOceanways",
-    year: "2024",
-    services: [
-      "Commercial Gas Stoves",
-      "Dosa & Chapati Bhatti",
-      "Gas Ranges (Single / Double / Triple Burner)",
-      "Shawarma Machines",
-      "Customized Kitchen Equipment"
-    ],
-    results: [
-      "High heat efficiency",
-      "Durable stainless steel construction",
-      "Customized sizes available"
-    ]
-  },
-
-  {
     id: 3,
     title: "Engine Liners",
     category: "Automotive & Industrial Components",
     description: "Precision-manufactured engine liners for multiple applications",
     image: "image/linerforpdf.png",
     fullDescription:
-      "SMEOceanways manufactures high-quality engine liners using advanced foundry, CNC machining, and quality control processes. These liners are used across automotive, tractor, heavy commercial, marine, and industrial applications, ensuring durability, heat resistance, and precision fit.",
-    client: "SMEOceanways",
+      "SME Oceanways manufactures high-quality engine liners using advanced foundry, CNC machining, and quality control processes. These liners are used across automotive, tractor, heavy commercial, marine, and industrial applications, ensuring durability, heat resistance, and precision fit.",
+    client: "SME Oceanways",
     year: "2024",
     services: [
       "Engine Liners Manufacturing",
@@ -79,7 +55,7 @@ export const productsData = [
     image: "image/pumpforpdf.png",
     fullDescription:
       "Our range of ISI-certified submersible pumps includes radial flow, mixed flow, and openwell pumps. Designed for high efficiency and long service life, these pumps are suitable for agriculture, irrigation, domestic water supply, and industrial applications.",
-    client: "SMEOceanways",
+    client: "SME Oceanways",
     year: "2024",
     services: [
       "Submersible Pumps (Single & Three Phase)",
@@ -93,5 +69,29 @@ export const productsData = [
       "Energy-efficient operation",
       "Reliable performance in deep bore wells"
     ]
-  }
+  },
+  {
+    id: 2,
+    title: "Commercial Gas Stoves & Kitchen Equipment",
+    category: "Commercial Kitchen Equipment",
+    description: "Professional-grade gas stoves and kitchen solutions",
+    image: "image/mainStove.png",
+    fullDescription:
+      "Our commercial kitchen range includes square stoves, round stoves, double burners, dosa bhatti, chapati bhatti, shawarma machines, gas ranges, idli steamers, food carts, and customized kitchen equipment. Built with stainless steel and designed for high-efficiency cooking in hotels, restaurants, and catering units.",
+    client: "SME Oceanways",
+    year: "2024",
+    services: [
+      "Commercial Gas Stoves",
+      "Dosa & Chapati Bhatti",
+      "Gas Ranges (Single / Double / Triple Burner)",
+      "Shawarma Machines",
+      "Customized Kitchen Equipment"
+    ],
+    results: [
+      "High heat efficiency",
+      "Durable stainless steel construction",
+      "Customized sizes available"
+    ]
+  },
+
 ];

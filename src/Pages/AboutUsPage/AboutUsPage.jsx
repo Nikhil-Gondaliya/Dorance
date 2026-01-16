@@ -1,5 +1,6 @@
 import { Footer } from "../../Components/Footer";
 import { Header } from "../../Components/Header";
+import { Whatsapp } from "../../Components/Whatsapps";
 
 export function AboutUsPage() {
   return (
@@ -143,11 +144,11 @@ export function AboutUsPage() {
             }}
           >
             {[
-              "Gas Stoves",
               "Door Closers",
+              "Cylinder Liners & Sleeves",
+              "Gas Stoves",
               "Submersible Pumps",
               "Kitchenware",
-              "Cylinder Liners & Sleeves",
             ].map((product, index) => (
               <div
                 key={index}
@@ -184,14 +185,19 @@ export function AboutUsPage() {
           <div style={{ display: "grid", gap: "40px" }}>
             {[
               {
-                title: "Gas Stoves",
-                desc: "Designed for efficiency, safety, and durability, our gas stoves meet the requirements of both domestic and commercial kitchens. Manufactured using high-grade materials, they ensure long service life and reliable performance.",
-                apps: "Homes, Restaurants, Hotels, Commercial Kitchens",
-              },
-              {
                 title: "Door Closers",
                 desc: "Hydraulic and automatic door closers designed for smooth, controlled operation. Suitable for high-traffic commercial and industrial environments.",
                 apps: "Offices, Hospitals, Hotels, Industrial Buildings",
+              },
+              {
+                title: "Cylinder Liners & Sleeves",
+                desc: "Precision-engineered components designed for automotive and industrial engines, ensuring durability and consistent performance.",
+                apps: "Automotive industry, Agriculture equipment, Industrial Engines & Machinery",
+              },
+              {
+                title: "Gas Stoves",
+                desc: "Designed for efficiency, safety, and durability, our gas stoves meet the requirements of both domestic and commercial kitchens. Manufactured using high-grade materials, they ensure long service life and reliable performance.",
+                apps: "Homes, Restaurants, Hotels, Commercial Kitchens",
               },
               {
                 title: "Submersible Pumps",
@@ -203,11 +209,7 @@ export function AboutUsPage() {
                 desc: "Food-grade stainless steel kitchenware products offering durability, hygiene, and everyday convenience.",
                 apps: "Households, Catering Services, Hotels",
               },
-              {
-                title: "Cylinder Liners & Sleeves",
-                desc: "Precision-engineered components designed for automotive and industrial engines, ensuring durability and consistent performance.",
-                apps: "Automotive industry, Agriculture equipment, Industrial Engines & Machinery",
-              },
+
             ].map((product, index) => (
               <div
                 key={index}
@@ -283,6 +285,9 @@ export function AboutUsPage() {
       </main>
 
       {/* Footer */}
+
+      <Whatsapp />
+
       <Footer />
     </div>
   );

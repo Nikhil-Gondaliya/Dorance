@@ -5,6 +5,7 @@ import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
 
 import "./ProductDetails.css"; // ← We'll move most styles here
+import { Whatsapp } from "../../Components/Whatsapps";
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -94,6 +95,8 @@ export const ProductDetails = () => {
           </section>
         )}
       </main>
+
+      <Whatsapp />
 
       <Footer />
     </div>

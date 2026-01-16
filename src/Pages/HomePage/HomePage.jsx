@@ -7,6 +7,7 @@ import { Footer } from '../../Components/Footer';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { MoveRight } from 'lucide-react';
+import { Whatsapp } from '../../Components/Whatsapps';
 
 const mainImges = [
   "/image/doorClose.jpg",
@@ -19,6 +20,7 @@ export function HomePage() {
   const [mobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // eslint-disable-next-line no-unused-vars
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -158,7 +160,7 @@ export function HomePage() {
 
     heroLeft: {
       backgroundColor: '#2c3e5f',
-      padding: isMobile ? '2.5rem 1.2rem' : '5rem 4rem',   // ← reduced padding on mobile
+      padding: isMobile ? '2.5rem 1.2rem' : '3rem 4rem',   // ← reduced padding on mobile
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',   // ← center content better on mobile
@@ -166,15 +168,11 @@ export function HomePage() {
 
     heroContent: {
       maxWidth: isMobile ? '100%' : '600px',          // ← prevent overflow
-      marginLeft: isMobile ? '0' : '1.2rem',
+      marginLeft: isMobile ? '0' : '0.5rem',
       display: "flex",
       flexDirection: "column",
       gap: isMobile ? "16px" : "10px",               // ← slightly more breathing room
-      alignItems: isMobile ? "center" : "flex-start", // ← center on mobile
-    },
-
-    heroTitle: {
-      // You don't have title anymore → removed or keep if needed
+      alignItems: isMobile ? "center" : "center", // ← center on mobile
     },
 
     heroSubtitle: {
@@ -182,9 +180,9 @@ export function HomePage() {
       color: '#ffffff',
       margin: 0,
       lineHeight: '1.5',
-      fontWeight: '300',
+      fontWeight: '100',
       opacity: '0.95',
-      textAlign: isMobile ? "center" : "left",       // ← ensure centered only on mobile
+      textAlign: isMobile ? "center" : "center",       // ← ensure centered only on mobile
       maxWidth: isMobile ? '90%' : 'none',           // ← prevent very long lines
     },
 
@@ -426,10 +424,10 @@ export function HomePage() {
         <div style={styles.heroLeft}>
           <div style={styles.heroContent}>
             <img
-              src='/image/smeLogo.jpg'
+              src='/image/bgLogo.jpg'
               alt="SME"
               width={isMobile ? 260 : 500}
-              height={isMobile ? 80 : 150} // if you know approx aspect ratio
+              height={isMobile ? 80 : 130} // if you know approx aspect ratio
               style={{ height: 'auto' }}
             />
             <p style={styles.heroSubtitle}>
@@ -473,7 +471,7 @@ export function HomePage() {
 
       {/* Background Section */}
       <section style={styles.backgroundSection}>
-        <p style={styles.sectionLabel}>ABOUT SMEOCEANWAYS</p>
+        <p style={styles.sectionLabel}>ABOUT SME OCEANWAYS</p>
         <p style={styles.backgroundText}>
           SME Oceanways is a reliable manufacturer and supplier of door closers, sleeve & liners, commercial gas stoves, and submersible pumps. We deliver high-performance, durable products for industrial, commercial, and hospitality sectors, ensuring quality, efficiency, and long-term reliability for our global customers. </p>
       </section>
@@ -485,9 +483,9 @@ export function HomePage() {
 
         <div style={styles.servicesGrid}>
           <div style={styles.serviceItem}>
-            <h4 style={styles.serviceTitle}>Commercial Gas Stoves</h4>
+            <h4 style={styles.serviceTitle}>Door Closers</h4>
             <p style={styles.serviceDescription}>
-              High-efficiency gas stoves and burners designed for hotels, restaurants, and catering services. Available in multiple sizes and configurations for fast and powerful cooking.
+              Smooth and secure door closer mechanisms and essential hardware that improve safety and operational convenience for commercial and residential use.
             </p>
           </div>
 
@@ -498,18 +496,20 @@ export function HomePage() {
           </div>
 
           <div style={styles.serviceItem}>
+            <h4 style={styles.serviceTitle}>Commercial Gas Stoves</h4>
+            <p style={styles.serviceDescription}>
+              High-efficiency gas stoves and burners designed for hotels, restaurants, and catering services. Available in multiple sizes and configurations for fast and powerful cooking.
+            </p>
+          </div>
+
+          <div style={styles.serviceItem}>
             <h4 style={styles.serviceTitle}>Submersible Pumps & Motors</h4>
             <p style={styles.serviceDescription}>
               Reliable pump systems engineered for heavy-duty performance in domestic, agricultural, and industrial applications. Built to deliver efficient water flow with long-lasting strength.
             </p>
           </div>
 
-          <div style={styles.serviceItem}>
-            <h4 style={styles.serviceTitle}>Door Closers</h4>
-            <p style={styles.serviceDescription}>
-              Smooth and secure door closer mechanisms and essential hardware that improve safety and operational convenience for commercial and residential use.
-            </p>
-          </div>
+
         </div>
       </section>
 
@@ -537,17 +537,20 @@ export function HomePage() {
 
         <div style={styles.projectsRight}>
           <div style={styles.projectsGrid}>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/dooforpfd.jpg" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} isMobile={isMobile}/>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} isMobile={isMobile}/>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/gs.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} isMobile={isMobile}/>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} isMobile={isMobile}/>
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fdoorcloser.png" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} isMobile={isMobile} />
+
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fliner.png" onClick={downloadLinePdf} buttonLabel={"Liner"} isMobile={isMobile} />
+
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fgasstove.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} isMobile={isMobile} />
+
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fpumps.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} isMobile={isMobile} />
           </div>
         </div>
       </section>
 
       {/* Work Approach Section */}
       <section style={styles.approachSection}>
-        <p style={{ ...styles.sectionLabel, color: '#2c3e5f' }}>WHY CHOOSE SMEOCEANWAYS</p>
+        <p style={{ ...styles.sectionLabel, color: '#2c3e5f' }}>WHY CHOOSE SME OCEANWAYS</p>
         <h3 style={styles.approachTitle}>
           Quality craftsmanship meets innovative design. We don't just sell products, we deliver lasting solutions.
         </h3>
@@ -562,6 +565,8 @@ export function HomePage() {
       </section>
 
       {/* Footer */}
+      <Whatsapp />
+
       <Footer isMobile={isMobile} />
     </div>
   );

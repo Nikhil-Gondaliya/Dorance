@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FaWhatsapp, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
+import { Whatsapp } from "../../Components/Whatsapps";
+import emailjs from "@emailjs/browser";
 
 export function ContactPage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -30,6 +32,37 @@ export function ContactPage() {
     console.log("Submitted:", formData);
     alert("Thank you! Your message has been sent (demo mode).");
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+
+    emailjs
+      .send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        "w7dTstxC59sHsVYT9"
+      )
+      .then(
+        () => {
+          alert("Thank you! Your message has been sent.");
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: "",
+          });
+        },
+        (error) => {
+          console.error("EmailJS Error:", error);
+          alert("Failed to send message. Please try again.");
+        }
+      );
+
   };
 
   return (
@@ -52,7 +85,7 @@ export function ContactPage() {
       >
         <div>
           <h1 style={{ fontSize: isMobile ? "2.8rem" : "4.5rem", fontWeight: 100, margin: "0 0 2rem", letterSpacing: "-0.02em" }}>
-            SMEOCEANWAYS
+            SME OCEANWAYS
           </h1>
           <p style={{ fontSize: isMobile ? "1.35rem" : "1.9rem", maxWidth: "820px", margin: "0 auto", fontWeight: 300, opacity: 0.92 }}>
             Where Quality Meets Global Trade
@@ -86,9 +119,10 @@ export function ContactPage() {
               <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
                 <FaMapMarkerAlt style={{ ...iconStyle, marginTop: "4px" }} />
                 <div>
-                  Misfaha, Muscat, Oman<br />
-                  P.O. Box No.569<br />
-                  Postal Code: 320
+                  SME Oceanways, Urja-9 IN-<br />
+                  4 Street-2 OPP. Toyota showroom<br />
+                  Gondal road, Village- Kangashiyali<br />
+                  Taluka- Lodhika, Rajkot-360022
                 </div>
               </div>
             </div>
@@ -140,7 +174,7 @@ export function ContactPage() {
             }}
           >
             <h2 style={{ fontSize: isMobile ? "2rem" : "2.5rem", margin: "0 0 0.6rem", color: "#111827", fontWeight: 100 }}>
-              Send Review
+              Send Query
             </h2>
             <p style={{ color: "#6b7280", marginBottom: "2.2rem", fontSize: "1.05rem" }}>
               We'd love to hear from you!
@@ -181,7 +215,7 @@ export function ContactPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="+968 ..."
+                  placeholder="+91 999.. ...."
                   style={inputStyle}
                 />
               </div>
@@ -249,38 +283,8 @@ export function ContactPage() {
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
       />
-      {/* Floating WhatsApp */}
-      <a
-        href="https://wa.me/+918217524980"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          position: "fixed",
-          bottom: isMobile ? "24px" : "32px",
-          right: isMobile ? "24px" : "32px",
-          background: "#25D366",
-          color: "white",
-          width: "68px",
-          height: "68px",
-          borderRadius: "50%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 8px 25px rgba(0,0,0,0.22)",
-          zIndex: 1000,
-          transition: "transform 0.2s, box-shadow 0.2s",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "scale(1.14)";
-          e.currentTarget.style.boxShadow = "0 12px 35px rgba(0,0,0,0.28)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.22)";
-        }}
-      >
-        <FaWhatsapp size={36} />
-      </a>
+
+      <Whatsapp />
 
       <Footer isMobile={isMobile} />
     </div>

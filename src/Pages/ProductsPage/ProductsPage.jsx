@@ -4,6 +4,7 @@ import { productsData } from '../../data';
 import { Header } from '../../Components/Header';
 import { Footer } from '../../Components/Footer';
 import { MessageCircleMore, Phone } from 'lucide-react';
+import { Whatsapp } from '../../Components/Whatsapps';
 
 export const ProductsPage = () => {
   const styles = {
@@ -231,6 +232,8 @@ export const ProductsPage = () => {
           </a>
         </div>
       </div>
+
+      <Whatsapp />
 
       <Footer />
     </div>
