@@ -49,8 +49,6 @@ export default function ProductTable() {
     setDeleteInfo(null);
   };
 
-  console.log(data)
-
   return (
     <div style={styles.container}>
       <div style={styles.card}>
