@@ -159,8 +159,6 @@ export function HomePage() {
     },
 
     heroLeft: {
-      backgroundColor: '#2c3e5f',
-      padding: isMobile ? '2.5rem 1.2rem' : '3rem 4rem',   // ← reduced padding on mobile
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',   // ← center content better on mobile
@@ -168,22 +166,10 @@ export function HomePage() {
 
     heroContent: {
       maxWidth: isMobile ? '100%' : '600px',          // ← prevent overflow
-      marginLeft: isMobile ? '0' : '0.5rem',
       display: "flex",
       flexDirection: "column",
       gap: isMobile ? "16px" : "10px",               // ← slightly more breathing room
       alignItems: isMobile ? "center" : "center", // ← center on mobile
-    },
-
-    heroSubtitle: {
-      fontSize: isMobile ? '1.1rem' : '1.5rem',
-      color: '#ffffff',
-      margin: 0,
-      lineHeight: '1.5',
-      fontWeight: '100',
-      opacity: '0.95',
-      textAlign: isMobile ? "center" : "center",       // ← ensure centered only on mobile
-      maxWidth: isMobile ? '90%' : 'none',           // ← prevent very long lines
     },
 
     heroRight: {
@@ -426,13 +412,9 @@ export function HomePage() {
             <img
               src='/image/bgLogo.jpg'
               alt="SME"
-              width={isMobile ? 260 : 500}
-              height={isMobile ? 80 : 130} // if you know approx aspect ratio
-              style={{ height: 'auto' }}
+              width="100%"
+              height="auto"
             />
-            <p style={styles.heroSubtitle}>
-              Where Quality Meets Global Trade.
-            </p>
           </div>
         </div>
 
@@ -537,13 +519,13 @@ export function HomePage() {
 
         <div style={styles.projectsRight}>
           <div style={styles.projectsGrid}>
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fdoorcloser.png" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} isMobile={isMobile} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/doorpdfv.png" onClick={downloadDoorCloserPdf} buttonLabel={"Door Closer"} isMobile={isMobile} />
 
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fliner.png" onClick={downloadLinePdf} buttonLabel={"Liner"} isMobile={isMobile} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/linerforpdf.png" onClick={downloadLinePdf} buttonLabel={"Liner"} isMobile={isMobile} />
 
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fgasstove.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} isMobile={isMobile} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/gs.png" onClick={downloadGasStovePdf} buttonLabel={"Gas Stove"} isMobile={isMobile} />
 
-            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/fpumps.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} isMobile={isMobile} />
+            <ImageCard styles={{ ...styles.projectImage, backgroundColor: '#ffffffff', display: "flex", justifyContent: "center", alignItems: "center" }} imgUrl="/image/pumpforpdf.png" onClick={downloadPumpPdf} buttonLabel={"Submersible Pump"} isMobile={isMobile} />
           </div>
         </div>
       </section>
