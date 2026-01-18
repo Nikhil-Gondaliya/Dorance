@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { productsData } from "../../data";
+import { addProduct } from "../../services/products";
+import { uploadImageToCloudinary } from "../../services/cloudinary";
 
 export default function AddProduct({ onClose, onSuccess }) {
   const [data, setData] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const [form, setForm] = useState({
     categoryId: "",
     name: "",
     description: "",
-    image: "",
     price: "",
   });
 
-  /* 🔹 Load data from IndexedDB */
+  /* 🔹 Load categories */
   useEffect(() => {
-    const loadData = async () => {
-      setData(productsData);
-    };
-    loadData();
+    setData(productsData);
   }, []);
 
   /* 🔹 Handle inputs */
@@ -26,15 +26,11 @@ export default function AddProduct({ onClose, onSuccess }) {
     setForm((p) => ({ ...p, [name]: value }));
   };
 
-  /* 🔹 Image upload (Base64) */
+  /* 🔹 Image handler (FILE only) */
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () =>
-      setForm((p) => ({ ...p, image: reader.result }));
-    reader.readAsDataURL(file);
+    setImageFile(file);
   };
 
   /* 🔹 Submit */
@@ -42,18 +38,48 @@ export default function AddProduct({ onClose, onSuccess }) {
     e.preventDefault();
     if (!form.categoryId) return alert("Select category");
 
-    const formData = {
-      id: Date.now(),
-      name: form.name,
-      description: form.description,
-      image: form.image,
-      price: Number(form.price),
-      categoryId: form.categoryId
-    };
+    try {
+      setIsUploading(true);
 
-    console.log("formData", formData)
-    onSuccess?.();
-    onClose?.();
+      let imageUrl = "";
+      let imagePublicId = "";
+
+      if (imageFile) {
+        const uploaded = await uploadImageToCloudinary(imageFile);
+        imageUrl = uploaded.url;
+        imagePublicId = uploaded.publicId;
+      }
+
+      const productData = {
+        id: Date.now(),
+        name: form.name,
+        description: form.description,
+        price: Number(form.price),
+        categoryId: form.categoryId,
+        image: imageUrl,
+        imagePublicId, // optional (useful for delete/update)
+      };
+
+      await addProduct(productData);
+
+      alert("Product added successfully!");
+
+      setForm({
+        categoryId: "",
+        name: "",
+        description: "",
+        price: "",
+      });
+      setImageFile(null);
+
+      onSuccess?.();
+      onClose?.();
+    } catch (error) {
+      console.error("Error adding product:", error);
+      alert("Failed to add product. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -114,8 +140,12 @@ export default function AddProduct({ onClose, onSuccess }) {
           <label style={styles.label}>Product Image</label>
           <div style={styles.uploadBox}>
             <input type="file" accept="image/*" onChange={handleImageChange} />
-            {form.image && (
-              <img src={form.image} alt="preview" style={styles.preview} />
+            {imageFile && (
+              <img
+                src={URL.createObjectURL(imageFile)}
+                alt="preview"
+                style={styles.preview}
+              />
             )}
           </div>
         </div>
@@ -135,11 +165,20 @@ export default function AddProduct({ onClose, onSuccess }) {
 
         {/* Actions */}
         <div style={styles.actions}>
-          <button type="button" onClick={onClose} style={styles.cancel}>
+          <button
+            type="button"
+            onClick={onClose}
+            style={styles.cancel}
+            disabled={isUploading}
+          >
             Cancel
           </button>
-          <button type="submit" style={styles.submit}>
-            Add Product
+          <button
+            type="submit"
+            style={styles.submit}
+            disabled={isUploading}
+          >
+            {isUploading ? "Uploading..." : "Add Product"}
           </button>
         </div>
       </form>
@@ -157,7 +196,7 @@ const styles = {
     boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
     overflow: "hidden",
     fontFamily: "Inter, system-ui, sans-serif",
-    boxSizing: "border-box", // ✅ FIX
+    boxSizing: "border-box",
   },
 
   header: {
@@ -186,7 +225,7 @@ const styles = {
 
   form: {
     padding: 20,
-    boxSizing: "border-box", // ✅ FIX
+    boxSizing: "border-box",
   },
 
   field: {
@@ -210,14 +249,13 @@ const styles = {
     background: "#f9fafb",
     fontSize: ".9rem",
     outline: "none",
-    boxSizing: "border-box", // ✅ FIX (IMPORTANT)
+    boxSizing: "border-box",
   },
 
   uploadBox: {
     display: "flex",
     alignItems: "center",
     gap: 12,
-    boxSizing: "border-box",
   },
 
   preview: {

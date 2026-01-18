@@ -2,46 +2,41 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
-
-import "./ProductDetails.css"; // ← We'll move most styles here
 import { Whatsapp } from "../../Components/Whatsapps";
+import { getProducts } from "../../services/products";
+import { productsData } from '../../data';
+import "./ProductDetails.css";
 
 export const ProductDetails = () => {
   const { id } = useParams();
 
-
   const [dbProducts, setDbProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const loadData = async () => {
+    try {
+      const fetchedProducts = await getProducts();
+
+      // 🔹 Optional: filter by categoryId if route param is category id
+      const filteredProducts = id
+        ? fetchedProducts.filter((p) => String(p.categoryId) === String(id))
+        : fetchedProducts;
+
+      setDbProducts(filteredProducts);
+    } catch (error) {
+      console.error("Error loading products:", error);
+      setDbProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const product = productsData.find((p) => p.id === Number(id));
+
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setDbProducts([]);
-      } catch (error) {
-        console.error("Failed to load products from DB:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
-  const sourceProducts = dbProducts.length ? dbProducts : [];
-  const product = sourceProducts.find((p) => p.id === Number(id));
-
-  // Normalize variants / subProducts
-  const variants = product?.subProducts ?? [];
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <Header />
-        <div className="loading">Loading product details...</div>
-        <Footer />
-      </div>
-    );
-  }
+    loadData();
+  }, [id, loadData]);
 
   return (
     <div className="product-details-page">
@@ -62,25 +57,33 @@ export const ProductDetails = () => {
       </div>
 
       <main className="main-content">
-        {variants.length > 0 && (
+        {loading ? (
+          <div className="center-message">Loading...</div>
+        ) : dbProducts.length === 0 ? (
+          <div className="center-message">No Data Found</div>
+        ) : (
           <section className="variants-section">
-            <h2>Available Variants</h2>
+            <h2>Products</h2>
 
             <div className="variants-grid">
-              {variants.map((variant) => (
-                <div key={variant.id} className="variant-card">
+              {dbProducts.map((item) => (
+                <div key={item.id} className="variant-card">
                   <div className="variant-image-wrapper">
                     <img
-                      src={variant.image}
-                      alt={variant.name}
+                      src={item.image}
+                      alt={item.name}
                       className="variant-image"
                       loading="lazy"
                     />
                   </div>
 
                   <div className="variant-info">
-                    <h3 className="variant-name">{variant.name}</h3>
-                    <p className="variant-desc">{variant.description}</p>
+                    <h3 className="variant-name">{item.name}</h3>
+                    <p className="variant-desc">{item.description}</p>
+
+                    {item.price && (
+                      <p className="variant-price">₹ {item.price}</p>
+                    )}
 
                     <Link to="/contact" className="contact-link">
                       Contact for details →
@@ -94,7 +97,6 @@ export const ProductDetails = () => {
       </main>
 
       <Whatsapp />
-
       <Footer />
     </div>
   );

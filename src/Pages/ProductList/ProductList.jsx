@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import AddProduct from "../AddProduct/AddProduct";
+import { getProducts, deleteProduct } from "../../services/products";
+import { productsData } from "../../data";
 
 export default function ProductTable() {
-  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
   const [deleteInfo, setDeleteInfo] = useState(null);
   const [addOpen, setAddOpen] = useState(false);
@@ -12,33 +14,40 @@ export default function ProductTable() {
   }, []);
 
   const loadData = async () => {
-    setData([]);
+    try {
+      const fetchedProducts = await getProducts();
+      setProducts(fetchedProducts);
+    } catch (error) {
+      console.error("Error loading products:", error);
+      alert("Failed to load products");
+    }
   };
 
-  const handleDeleteClick = (categoryId, subProductId) => {
-    setDeleteInfo({ categoryId, subProductId });
+  const getCategoryName = (categoryId) => {
+    const category = productsData.find(
+      (cat) => cat.id === Number(categoryId) || cat.id.toString() === categoryId
+    );
+    return category ? category.title : "Unknown Category";
+  };
+
+  // ✅ FIXED: accepts Firestore docId
+  const handleDeleteClick = (docId) => {
+    setDeleteInfo({ docId });
     setOpen(true);
   };
 
   const handleConfirmDelete = async () => {
-    if (!deleteInfo) return;
+    if (!deleteInfo?.docId) return;
 
-    const updated = data.map((cat) => {
-      if (cat.id === deleteInfo.categoryId) {
-        return {
-          ...cat,
-          subProducts: (cat.subProducts || []).filter(
-            (sub) => sub.id !== deleteInfo.subProductId
-          ),
-        };
-      }
-      return cat;
-    });
-
-    setData(updated);
-
-    setOpen(false);
-    setDeleteInfo(null);
+    try {
+      await deleteProduct(deleteInfo.docId);
+      await loadData();
+      setOpen(false);
+      setDeleteInfo(null);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Failed to delete product");
+    }
   };
 
   const handleCancelDelete = () => {
@@ -49,18 +58,13 @@ export default function ProductTable() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        {/* Header */}
         <div style={styles.header}>
           <h2 style={styles.title}>Products</h2>
-          <button
-            style={styles.addButton}
-            onClick={() => setAddOpen(true)}
-          >
+          <button style={styles.addButton} onClick={() => setAddOpen(true)}>
             + Add Product
           </button>
         </div>
 
-        {/* Table */}
         <div style={styles.tableContainer}>
           <table style={styles.table}>
             <thead>
@@ -73,54 +77,68 @@ export default function ProductTable() {
                 <th style={{ ...styles.th, textAlign: "center" }}>Actions</th>
               </tr>
             </thead>
+
             <tbody>
-              {data.flatMap(cat => (cat.subProducts || []).map((sub, idx) => ({
-                category: cat,
-                sub,
-                rowIndex: idx
-              }))).length === 0 ? (
+              {products.length === 0 ? (
                 <tr>
                   <td colSpan={6} style={styles.emptyState}>
                     No products added yet.
                   </td>
                 </tr>
               ) : (
-                data.map((cat) =>
-                  (cat.subProducts || []).map((sub, index) => (
-                    <tr
-                      key={sub.id}
-                      style={{
-                        ...styles.row,
-                        backgroundColor: index % 2 === 0 ? "#ffffff" : "#f9fafb",
-                      }}
-                    >
-                      <td style={styles.td}>{cat.title}</td>
-                      <td style={{ ...styles.td, fontWeight: 600 }}>{sub.name}</td>
-                      <td style={{ ...styles.td, textAlign: "center" }}>
-                        {sub.image ? <img src={sub.image} alt={sub.name} style={styles.productImage} /> : "—"}
-                      </td>
-                      <td style={styles.td}>₹{sub.price?.toLocaleString() || "0"}</td>
-                      <td style={styles.descriptionCell} title={sub.description}>
-                        {sub.description || "—"}
-                      </td>
-                      <td style={{ ...styles.td, textAlign: "center" }}>
-                        <button
-                          style={styles.deleteButton}
-                          onClick={() => handleDeleteClick(cat.id, sub.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )
+                products.map((product, index) => (
+                  <tr
+                    key={product.docId}   // ✅ FIXED
+                    style={{
+                      ...styles.row,
+                      backgroundColor:
+                        index % 2 === 0 ? "#ffffff" : "#f9fafb",
+                    }}
+                  >
+                    <td style={styles.td}>
+                      {getCategoryName(product.categoryId)}
+                    </td>
+
+                    <td style={{ ...styles.td, fontWeight: 600 }}>
+                      {product.name}
+                    </td>
+
+                    <td style={{ ...styles.td, textAlign: "center" }}>
+                      {product.image ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          style={styles.productImage}
+                        />
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+
+                    <td style={styles.td}>
+                      ₹{product.price?.toLocaleString() || "0"}
+                    </td>
+
+                    <td style={styles.descriptionCell} title={product.description}>
+                      {product.description || "—"}
+                    </td>
+
+                    <td style={{ ...styles.td, textAlign: "center" }}>
+                      <button
+                        style={styles.deleteButton}
+                        onClick={() => handleDeleteClick(product.docId)} // ✅ FIXED
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Delete Confirmation */}
       {open && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
@@ -140,7 +158,6 @@ export default function ProductTable() {
         </div>
       )}
 
-      {/* Add Product Dialog */}
       {addOpen && (
         <div style={styles.modalOverlay}>
           <div style={styles.addModal}>
@@ -157,6 +174,7 @@ export default function ProductTable() {
     </div>
   );
 }
+
 
 /* ================= IMPROVED STYLES ================= */
 const styles = {
@@ -276,7 +294,7 @@ const styles = {
     borderRadius: "12px",
     width: "90%",
     maxWidth: "460px",
-    maxHeight: "90vh",
+    maxHeight: "100vh",
     overflowY: "auto",
   },
   modalTitle: {
