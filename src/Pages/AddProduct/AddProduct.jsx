@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { productsData } from "../../data";
-import { getAllProducts, saveProducts } from "../../db/db";
 
 export default function AddProduct({ onClose, onSuccess }) {
   const [data, setData] = useState([]);
@@ -16,13 +15,7 @@ export default function AddProduct({ onClose, onSuccess }) {
   /* 🔹 Load data from IndexedDB */
   useEffect(() => {
     const loadData = async () => {
-      const stored = await getAllProducts();
-      if (stored?.length > 0) {
-        setData(stored);
-      } else {
-        setData(productsData);
-        await saveProducts(productsData);
-      }
+      setData(productsData);
     };
     loadData();
   }, []);
@@ -49,25 +42,16 @@ export default function AddProduct({ onClose, onSuccess }) {
     e.preventDefault();
     if (!form.categoryId) return alert("Select category");
 
-    const updated = data.map((cat) =>
-      cat.id === Number(form.categoryId)
-        ? {
-          ...cat,
-          subProducts: [
-            ...(cat.subProducts || []),
-            {
-              id: Date.now(),
-              name: form.name,
-              description: form.description,
-              image: form.image,
-              price: Number(form.price),
-            },
-          ],
-        }
-        : cat
-    );
+    const formData = {
+      id: Date.now(),
+      name: form.name,
+      description: form.description,
+      image: form.image,
+      price: Number(form.price),
+      categoryId: form.categoryId
+    };
 
-    await saveProducts(updated);
+    console.log("formData", formData)
     onSuccess?.();
     onClose?.();
   };

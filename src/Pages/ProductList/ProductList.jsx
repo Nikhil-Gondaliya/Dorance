@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getAllProducts, saveProducts } from "../../db/db";
 import AddProduct from "../AddProduct/AddProduct";
 
 export default function ProductTable() {
@@ -13,8 +12,7 @@ export default function ProductTable() {
   }, []);
 
   const loadData = async () => {
-    const stored = await getAllProducts();
-    setData(stored || []);
+    setData([]);
   };
 
   const handleDeleteClick = (categoryId, subProductId) => {
@@ -38,7 +36,6 @@ export default function ProductTable() {
     });
 
     setData(updated);
-    await saveProducts(updated);
 
     setOpen(false);
     setDeleteInfo(null);

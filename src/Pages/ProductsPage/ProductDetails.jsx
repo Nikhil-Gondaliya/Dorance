@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getAllProducts } from "../../db/db";
 import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
 
@@ -17,10 +16,7 @@ export const ProductDetails = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const stored = await getAllProducts();
-        if (stored?.length) {
-          setDbProducts(stored);
-        }
+        setDbProducts([]);
       } catch (error) {
         console.error("Failed to load products from DB:", error);
       } finally {
@@ -54,14 +50,14 @@ export const ProductDetails = () => {
       <div
         className="hero"
         style={{
-          backgroundImage: `url(${product.image})`,
+          backgroundImage: `url(${product?.image})`,
         }}
       >
         <div className="hero-overlay" />
         <div className="hero-content">
-          <div className="category">{product.category}</div>
-          <h1 className="title">{product.title}</h1>
-          <p className="short-description">{product.shortDescription}</p>
+          <div className="category">{product?.category}</div>
+          <h1 className="title">{product?.title}</h1>
+          <p className="short-description">{product?.shortDescription}</p>
         </div>
       </div>
 
