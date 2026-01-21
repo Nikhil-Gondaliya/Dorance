@@ -81,7 +81,7 @@ export const ProductDetails = () => {
                     <h3 className="variant-name">{item.name}</h3>
                     <p className="variant-desc">{item.description}</p>
 
-                    {item.price && (
+                    {item.price > 0 && (
                       <p className="variant-price">₹ {item.price}</p>
                     )}
 

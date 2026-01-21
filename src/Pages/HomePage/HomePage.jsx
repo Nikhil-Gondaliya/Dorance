@@ -161,11 +161,10 @@ export function HomePage() {
     heroLeft: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',   // ← center content better on mobile
     },
 
     heroContent: {
-      maxWidth: isMobile ? '100%' : '600px',          // ← prevent overflow
+      maxWidth: isMobile ? '100%' : '650px',          // ← prevent overflow
       display: "flex",
       flexDirection: "column",
       gap: isMobile ? "16px" : "10px",               // ← slightly more breathing room

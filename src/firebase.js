@@ -1,14 +1,21 @@
-import { initializeApp } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
+import { initializeApp, getApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB5Rr7DCjtC3PlZH2d4IL5Z4VZu1XCw5gg",
-    authDomain: "smeoceanways-5166c.firebaseapp.com",
-    projectId: "smeoceanways-5166c",
-    storageBucket: "smeoceanways-5166c.firebasestorage.app",
-    messagingSenderId: "1093455465021",
-    appId: "1:1093455465021:web:ebe070914b5b0483a6f854"
+    apiKey: "AIzaSyDZOlsU0m7lz-QCftJpC9WprUwQjng5yNQ",
+    authDomain: "smeoceanways-e7cfd.firebaseapp.com",
+    projectId: "smeoceanways-e7cfd",
+    storageBucket: "smeoceanways-e7cfd.firebasestorage.app",
+    messagingSenderId: "165247353803",
+    appId: "1:165247353803:web:6f4336c0c96acfcbd4ac4e"
 };
 
-const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app)
+const app = initializeApp(firebaseConfig);
+
+console.log("PROJECT ID 👉", getApp().options.projectId);
+
+// ✅ EXPORT app
+export default app;
+
+// ✅ EXPORT db
+export const db = getFirestore(app);

@@ -144,6 +144,7 @@
   line-height: 1.5;
   margin: 0 0 1.2rem;
   flex-grow: 1;
+  line-break: anywhere;
 }
 
 .contact-link {

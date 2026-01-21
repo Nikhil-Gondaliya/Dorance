@@ -29,14 +29,12 @@ export function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted:", formData);
-    alert("Thank you! Your message has been sent (demo mode).");
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
 
     emailjs
       .send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        "service_3p0dm3n",
+        "template_0s39ryb",
         {
           name: formData.name,
           email: formData.email,
