@@ -144,8 +144,10 @@
   line-height: 1.5;
   margin: 0 0 1.2rem;
   flex-grow: 1;
+  white-space: pre-line;   /* ✅ REQUIRED */
   line-break: anywhere;
 }
+
 
 .contact-link {
   color: #2563eb;
